@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORE INSIGHTS OF AGRICARE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Lato', sans-serif;
+            background: linear-gradient(135deg, #E0F7FA, #00796B);
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            color: #fff;
+            text-align: center;
+            margin: 40px 0;
+            font-size: 2.5em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            padding: 20px;
+        }
+
+        .feature {
+            background: #f9f9f9;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            width: 100%;
+            max-width: 900px;
+            position: relative;
+            transform: translateY(50px);
+            opacity: 0;
+            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+        }
+
+        .feature.in-view {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .feature .icon {
+            font-size: 2.5em;
+            color: #00796B;
+            margin-bottom: 15px;
+        }
+
+        .feature .description {
+            font-size: 1em;
+            color: #555;
+            margin: 10px 0;
+        }
+
+        .feature .description strong {
+            display: block;
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .content-box {
+            background-color: #E0F2F1;
+            border-radius: 10px;
+            padding: 15px;
+            color: #333;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            margin-top: 15px;
+            border-left: 5px solid #00796B;
+        }
+
+        .highlight-box {
+            background-color: #80CBC4;
+            color: #333;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 10px;
+            font-size: 1.1em;
+        }
+
+        @media (min-width: 768px) {
+            .feature {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>CORE INSIGHTS OF AGRICARE</h1>
+    <div class="container">
+        <!-- Feature 1 -->
+        <div class="feature animate" id="feature1">
+            <div class="icon"><i class="fas fa-chart-line"></i></div>
+            <div class="description">
+                <strong>Comprehensive Price Prediction:</strong>
+                <div class="content-box">
+                    <div class="highlight-box">
+                        Our AI-driven models predict agricultural commodity prices accurately, helping farmers and policymakers stay updated on market trends. This enables smarter financial planning for crop sales and purchases.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="feature animate" id="feature2">
+            <div class="icon"><i class="fas fa-balance-scale"></i></div>
+            <div class="description">
+                <strong>Dynamic Supply and Demand Analysis:</strong>
+                <div class="content-box">
+                    <div class="highlight-box">
+                        Real-time analysis helps predict supply-demand fluctuations, allowing for better crop distribution strategies and avoiding overproduction. Farmers can adjust planting strategies based on dynamic market trends.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="feature animate" id="feature3">
+            <div class="icon"><i class="fas fa-analytics"></i></div>
+            <div class="description">
+                <strong>Detailed Productivity Metrics:</strong>
+                <div class="content-box">
+                    <div class="highlight-box">
+                        Our system provides in-depth productivity metrics, giving a clear view of crop performance across regions. This helps in effective resource planning and optimizing yields over time.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Feature 4 -->
+        <div class="feature animate" id="feature4">
+            <div class="icon"><i class="fas fa-map"></i></div>
+            <div class="description">
+                <strong>Interactive Heatmaps:</strong>
+                <div class="content-box">
+                    <div class="highlight-box">
+                        Explore geographical patterns of market trends and crop productivity through visually appealing heatmaps. These provide insight into state-wise performance and agricultural conditions across India.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Feature 5 -->
+        <div class="feature animate" id="feature5">
+            <div class="icon"><i class="fas fa-chart-bar"></i></div>
+            <div class="description">
+                <strong>Up-to-Date Market Demand Insights:</strong>
+                <div class="content-box">
+                    <div class="highlight-box">
+                        Stay ahead of consumer needs by monitoring daily market demand fluctuations. This feature ensures producers and distributors have the most recent data for decision-making.
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Feature 6 -->
+        <div class="feature animate" id="feature6">
+            <div class="icon"><i class="fas fa-paint-brush"></i></div>
+            <div class="description">
+                <strong>Visual Representation of Insights:</strong>
+                <div class="content-box">
+                    <div class="highlight-box">
+                        Stunning visual charts and graphs provide a real-time view of agricultural insights. This visual representation helps in making well-informed decisions faster, enhancing the overall decision-making process.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('scroll', function() {
+            const features = document.querySelectorAll('.feature');
+            const viewportHeight = window.innerHeight;
+
+            features.forEach(feature => {
+                const featureTop = feature.getBoundingClientRect().top;
+                if (featureTop < viewportHeight * 0.8) {
+                    feature.classList.add('in-view');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

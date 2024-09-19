@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vegetable Price Statistics</title>
-    <script src="path/to/chart.min.js"></script>
-    <script src="path/to/scrollreveal.min.js"></script>
+
+    <!-- Include Chart.js and ScrollReveal.js from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
     
     <style>
         body {
@@ -24,13 +26,17 @@
         }
         .chart-container {
             position: relative;
-            width: 50%; /* Reduced width for smaller pie charts */
-            max-width: 400px;
-            margin-bottom: 40px;
+            width: 90%; /* Adjust width for responsiveness */
+            max-width: 700px; /* Increased max-width for better appearance */
+            margin-bottom: 40px; /* Space between charts */
+            height: 400px; /* Adjusted height for charts */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center align content */
         }
         canvas {
             width: 100% !important; /* Ensure canvas takes full width of its container */
-            height: auto !important; /* Maintain aspect ratio */
+            height: 80% !important; /* Maintain height ratio to avoid stretching */
         }
         .description {
             background-color: #fff;
@@ -38,8 +44,10 @@
             border-radius: 5px;
             padding: 10px;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 20px; /* Space between chart and description */
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%; /* Ensure description takes full width of container */
+            max-width: 700px; /* Same max-width as charts for consistency */
         }
         .description span {
             display: block;
@@ -47,10 +55,10 @@
         }
         h1 {
             text-align: center;
-            background-color: #4caf50; /* Background color for the title */
+            background-color:#004d66; /* Background color for the title */
             color: white;
             padding: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 40px; /* Space between title and charts */
         }
     </style>
 </head>
@@ -58,7 +66,7 @@
     <h1>Average Price Distribution of Vegetables</h1>
     <div class="container">
         <!-- Chart 1 -->
-        <div class="chart-container" id="chart1">
+        <div class="chart-container">
             <canvas id="priceDistributionChart1"></canvas>
             <div class="description" style="background-color: #e0f7fa;">
                 <span><strong>States:</strong> Tamil Nadu, Andhra Pradesh, Punjab, Assam, Delhi, Karnataka, Maharashtra</span>
@@ -67,7 +75,7 @@
         </div>
 
         <!-- Chart 2 -->
-        <div class="chart-container" id="chart2">
+        <div class="chart-container">
             <canvas id="priceDistributionChart2"></canvas>
             <div class="description" style="background-color: #fce4ec;">
                 <span><strong>States:</strong> West Bengal, Kerala, Uttar Pradesh, Gujarat, Rajasthan, Haryana, Bihar</span>
@@ -76,7 +84,7 @@
         </div>
 
         <!-- Chart 3 -->
-        <div class="chart-container" id="chart3">
+        <div class="chart-container">
             <canvas id="priceDistributionChart3"></canvas>
             <div class="description" style="background-color: #f3e5f5;">
                 <span><strong>States:</strong> Jharkhand, Odisha, Punjab, Assam, Delhi, Tamil Nadu, Karnataka</span>
@@ -85,7 +93,7 @@
         </div>
 
         <!-- Chart 4 -->
-        <div class="chart-container" id="chart4">
+        <div class="chart-container">
             <canvas id="priceDistributionChart4"></canvas>
             <div class="description" style="background-color: #fff9c4;">
                 <span><strong>States:</strong> Maharashtra, Gujarat, Uttar Pradesh, Haryana, Bihar, West Bengal, Kerala</span>
@@ -95,34 +103,52 @@
     </div>
 
     <script>
-        function createPieChart(canvasId, labels, data, backgroundColors) {
+        function createBarChart(canvasId, labels, data, backgroundColors) {
             const ctx = document.getElementById(canvasId).getContext('2d');
             new Chart(ctx, {
-                type: 'pie',
+                type: 'bar',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Vegetable Price',
+                        label: 'Average Price (₹)',
                         data: data,
                         backgroundColor: backgroundColors,
+                        borderColor: backgroundColors.map(color => color.replace('0.2', '1')), // Darker border color
+                        borderWidth: 1
                     }]
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#ddd'
+                            },
+                            title: {
+                                display: true,
+                                text: 'States',
+                                color: '#333'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#ddd'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Price (₹)',
+                                color: '#333'
+                            }
+                        }
+                    },
                     plugins: {
                         tooltip: {
                             callbacks: {
                                 label: function(tooltipItem) {
-                                    const prices = [120, 150, 100, 80, 130, 140, 110]; // Example prices, adjust as needed
-                                    const priceStatus = ['increased', 'decreased', 'increased', 'decreased', 'increased', 'decreased', 'increased'];
-                                    const arrows = ['↑', '↓', '↑', '↓', '↑', '↓', '↑'];
-
-                                    const state = tooltipItem.label;
-                                    const price = tooltipItem.raw;
-                                    const status = priceStatus[tooltipItem.dataIndex];
-                                    const arrow = arrows[tooltipItem.dataIndex];
-
-                                    return ${state}: ₹${price} (${status} ${arrow});
+                                    return `${tooltipItem.label}: ₹${tooltipItem.raw}`;
                                 }
                             }
                         }
@@ -131,27 +157,27 @@
             });
         }
 
-        createPieChart('priceDistributionChart1',
+        createBarChart('priceDistributionChart1',
             ['Tamil Nadu', 'Andhra Pradesh', 'Punjab', 'Assam', 'Delhi', 'Karnataka', 'Maharashtra'],
-            [120, 150, 80, 100, 130, 110, 140], // Varied sizes
+            [120, 150, 80, 100, 130, 110, 140], // Example data
             ['#ff5722', '#ff9800', '#ffc107', '#ffeb3b', '#cddc39', '#8bc34a', '#4caf50']
         );
 
-        createPieChart('priceDistributionChart2', 
+        createBarChart('priceDistributionChart2', 
             ['West Bengal', 'Kerala', 'Uttar Pradesh', 'Gujarat', 'Rajasthan', 'Haryana', 'Bihar'],
-            [130, 115, 140, 105, 120, 125, 135], // Varied sizes
+            [130, 115, 140, 105, 120, 125, 135], // Example data
             ['#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a']
         );
 
-        createPieChart('priceDistributionChart3', 
+        createBarChart('priceDistributionChart3', 
             ['Jharkhand', 'Odisha', 'Punjab', 'Assam', 'Delhi', 'Tamil Nadu', 'Karnataka'],
-            [125, 140, 115, 130, 110, 125, 140], // Varied sizes
+            [125, 140, 115, 130, 110, 125, 140], // Example data
             ['#9c27b0', '#e91e63', '#f44336', '#ff5722', '#ff9800', '#ffc107', '#ffeb3b']
         );
 
-        createPieChart('priceDistributionChart4', 
+        createBarChart('priceDistributionChart4', 
             ['Maharashtra', 'Gujarat', 'Uttar Pradesh', 'Haryana', 'Bihar', 'West Bengal', 'Kerala'],
-            [135, 125, 115, 140, 120, 110, 130], // Varied sizes
+            [135, 125, 115, 140, 120, 110, 130], // Example data
             ['#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50']
         );
 
