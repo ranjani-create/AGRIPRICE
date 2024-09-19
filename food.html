@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Production and Price Charts</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .chart-container {
+            width: 80%;
+            margin: auto;
+        }
+        canvas {
+            background-color: #f4f4f4;
+        }
+        .description-box {
+            color: #000;
+            padding: 15px;
+            margin: 20px auto;
+            border-radius: 10px;
+            width: 80%;
+            text-align: center;
+            border: 1px solid #004d66;
+        }
+        .title-box {
+            background-color: #004d66;
+            color: white;
+            padding: 15px;
+            margin: 20px auto;
+            border-radius: 10px;
+            width: 80%;
+            text-align: center;
+        }
+        .chart-container canvas {
+            width: 100% !important;
+            height: 400px !important; /* Adjust as needed */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="title-box">
+        <h2>Food Grains Production vs Price</h2>
+    </div>
+
+    <div class="description-box">
+        <p> This government project aims to analyze and present the relationship between crop production and market prices for key crops including rice, wheat, and maize. The visualizations provided in this report assist in understanding the trends in production and pricing across different states, which is crucial for effective policy-making and resource allocation in the agricultural sector.</p>
+    </div>
+ 
+    <div class="chart-container">
+        <h2>Rice Production vs. Price</h2>
+        <canvas id="riceChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <h2>Wheat Production vs. Price</h2>
+        <canvas id="wheatChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <h2>Maize Production vs. Price</h2>
+        <canvas id="maizeChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <h2>Combined Crop Production</h2>
+        <canvas id="combinedChart"></canvas>
+    </div>
+
+    <script>
+        const ctxRice = document.getElementById('riceChart').getContext('2d');
+        const ctxWheat = document.getElementById('wheatChart').getContext('2d');
+        const ctxMaize = document.getElementById('maizeChart').getContext('2d');
+        const ctxCombined = document.getElementById('combinedChart').getContext('2d');
+
+        const states = [
+            'Maharashtra', 'Karnataka', 'Gujarat', 'Punjab', 'Haryana',
+            'Uttar Pradesh', 'Bihar', 'West Bengal', 'Odisha', 'Madhya Pradesh',
+            'Rajasthan'
+        ];
+        
+        const productionRice = [100, 150, 200, 250, 300, 350, 400, 450, 500, 550, 600];
+        const priceRice = [10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
+        
+        const productionWheat = [80, 120, 160, 200, 240, 280, 320, 360, 400, 440, 480];
+        const priceWheat = [12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72];
+        
+        const productionMaize = [90, 140, 190, 240, 290, 340, 390, 440, 490, 540, 590];
+        const priceMaize = [11, 16, 21, 26, 31, 36, 41, 46, 51, 56, 61];
+
+        new Chart(ctxRice, {
+            type: 'line',
+            data: {
+                labels: states,
+                datasets: [
+                    {
+                        label: 'Production (in tons)',
+                        data: productionRice,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Price (in $)',
+                        data: priceRice,
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'States' } },
+                    y: { title: { display: true, text: 'Value' } }
+                }
+            }
+        });
+
+        new Chart(ctxWheat, {
+            type: 'line',
+            data: {
+                labels: states,
+                datasets: [
+                    {
+                        label: 'Production (in tons)',
+                        data: productionWheat,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Price (in $)',
+                        data: priceWheat,
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'States' } },
+                    y: { title: { display: true, text: 'Value' } }
+                }
+            }
+        });
+
+        new Chart(ctxMaize, {
+            type: 'line',
+            data: {
+                labels: states,
+                datasets: [
+                    {
+                        label: 'Production (in tons)',
+                        data: productionMaize,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Price (in $)',
+                        data: priceMaize,
+                        borderColor: 'rgba(153, 102, 255, 1)',
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'States' } },
+                    y: { title: { display: true, text: 'Value' } }
+                }
+            }
+        });
+
+        new Chart(ctxCombined, {
+            type: 'line',
+            data: {
+                labels: states,
+                datasets: [
+                    {
+                        label: 'Rice Production',
+                        data: productionRice,
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Wheat Production',
+                        data: productionWheat,
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderWidth: 2
+                    },
+                    {
+                        label: 'Maize Production',
+                        data: productionMaize,
+                        borderColor: 'rgba(255, 159, 64, 1)',
+                        backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        borderWidth: 2
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: { title: { display: true, text: 'States' } },
+                    y: { title: { display: true, text: 'Production (in tons)' } }
+                }
+            }
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Average Price of Goods by State</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            text-align: center;
+            background-color: #004d66;
+            color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+        .description-box {
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: rgb(253, 254, 254);
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .chart-box {
+            width: 600px;
+            height: 400px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Price trends of other items(Milk,Sugar,Salt,Tea)</h1>
+    <div class="description-box">
+        <p>
+            This set of bar charts provides a detailed comparison of the average prices per kilogram of essential items—sugar, salt, milk, and tea—across 28 states in India. The charts are divided into four groups, each representing the price trends in seven states. 
+            Hover over the bars to view the exact price in INR for each item in each state. This visualization helps in understanding regional price variations and can be useful for consumers, policymakers, and businesses.
+        </p>
+    </div>
+
+    <div class="chart-container">
+        <!-- Chart 1: States 1-7 -->
+        <div class="chart-box">
+            <canvas id="chart1"></canvas>
+        </div>
+        <!-- Chart 2: States 8-14 -->
+        <div class="chart-box">
+            <canvas id="chart2"></canvas>
+        </div>
+        <!-- Chart 3: States 15-21 -->
+        <div class="chart-box">
+            <canvas id="chart3"></canvas>
+        </div>
+        <!-- Chart 4: States 22-28 -->
+        <div class="chart-box">
+            <canvas id="chart4"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const stateLabels = [
+            ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat'], // Chart 1
+            ['Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra'], // Chart 2
+            ['Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab', 'Rajasthan'], // Chart 3
+            ['Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal'] // Chart 4
+        ];
+
+        const prices = [
+            { sugar: [40, 45, 42, 41, 44, 50, 38], salt: [20, 18, 22, 21, 20, 19, 23], milk: [50, 52, 49, 48, 51, 55, 47], tea: [150, 160, 155, 145, 148, 162, 149] }, // Chart 1
+            { sugar: [42, 43, 41, 39, 48, 44, 46], salt: [21, 23, 22, 19, 24, 22, 20], milk: [53, 51, 52, 50, 56, 54, 48], tea: [152, 157, 153, 151, 159, 155, 150] }, // Chart 2
+            { sugar: [44, 46, 42, 43, 47, 45, 49], salt: [22, 21, 23, 20, 24, 22, 21], milk: [55, 53, 54, 51, 57, 56, 50], tea: [154, 159, 158, 153, 160, 157, 155] }, // Chart 3
+            { sugar: [45, 47, 43, 46, 48, 44, 50], salt: [23, 22, 21, 24, 25, 22, 20], milk: [56, 54, 55, 52, 58, 53, 51], tea: [156, 158, 160, 152, 161, 154, 151] } // Chart 4
+        ];
+
+        function createChart(chartId, labels, data) {
+            const ctx = document.getElementById(chartId).getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Sugar price per kg',
+                            data: data.sugar,
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Salt price per kg',
+                            data: data.salt,
+                            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Milk price per ltr',
+                            data: data.milk,
+                            backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Tea price per kg',
+                            data: data.tea,
+                            backgroundColor: 'rgba(255, 206, 86, 0.5)',
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    plugins: {
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += context.parsed.y.toFixed(2) + ' INR';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Price (INR)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Create charts for each group of states
+        createChart('chart1', stateLabels[0], prices[0]);
+        createChart('chart2', stateLabels[1], prices[1]);
+        createChart('chart3', stateLabels[2], prices[2]);
+        createChart('chart4', stateLabels[3], prices[3]);
+
+    </script>
+
+</body>
+</html>

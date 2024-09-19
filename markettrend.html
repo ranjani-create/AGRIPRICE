@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Essential Commodities Demand and Supply</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .heading {
+            background-color: #004d66;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .description {
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .description p, .description ul {
+            margin: 0;
+        }
+        /* Center the graph */
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        canvas {
+            width: 800px; /* Increase the width */
+            height: 400px; /* Increase the height */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Centered and styled heading -->
+        <div class="heading">
+            <h1>Demand and Supply curve for Essential Commodities</h1>
+        </div>
+        <div class="description">
+            <p>The Government of India actively monitors the demand and supply of essential commodities to ensure equitable access and price stability for all citizens. The Department of Consumer Affairs regularly assesses the market trends for critical items such as food grains, pulses, and edible oils.</p>
+            <p>Through efficient management of supply chains and maintenance of adequate buffer stocks, the government prevents market shortages and excessive price volatility. This strategy plays a key role in maintaining food security, ensuring public welfare, and supporting India's commitment to a resilient and sustainable market environment.</p>
+            <p>The chart below presents a comparative analysis of the demand and supply trends for essential commodities over the past months. These figures aid policymakers in implementing timely interventions to balance market supply and demand.</p>
+        </div>
+        <!-- Centered graph -->
+        <div class="chart-container">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const ctx = document.getElementById('myChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Rice', 'Wheat', 'Pulses', 'Sugar', 'Edible Oil', 'Milk', 'Vegetables'], // X-axis labels (commodities)
+                datasets: [
+                    {
+                        label: 'Demand',
+                        data: [150, 200, 180, 170, 160, 190, 210], // Y-axis data for Demand
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        fill: false
+                    },
+                    {
+                        label: 'Supply',
+                        data: [145, 195, 175, 165, 155, 185, 205], // Y-axis data for Supply
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        fill: false
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Commodities'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Quantity (in Tons)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

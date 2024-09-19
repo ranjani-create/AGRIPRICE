@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGRICARE: Pulses Price and Productivity Insights</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffecb3, #ffcdd2); /* Bright gradient background */
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            background-color: #ffab40;
+            padding: 8px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .description {
+            background-color: #fff3e0;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .graph-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .graph-box {
+            flex-basis: 48%; /* Adjust width for two columns */
+            margin-bottom: 20px;
+        }
+        .graph {
+            width: 100%; /* Full width of its container */
+            height: 350px; /* Medium size height */
+        }
+        .description-box {
+            background-color: #ffebee;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            line-height: 1.5;
+            max-width: 90%;
+            text-align: center;
+            margin: 0 auto;
+        }
+        @media screen and (max-width: 768px) {
+            .graph-box {
+                flex-basis: 100%; /* Stack graphs vertically on small screens */
+            }
+            h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AGRICARE: PULSES PRICE AND PRODUCTIVITY INSIGHTS</h1>
+        <div class="description">
+            This webpage provides insightful analytics on the prices and productivity of key pulses such as Gram, Tur, Urad, and Moong dal across different Indian states. The interactive graphs below are designed to help government officials monitor trends, evaluate regional variations, and make data-driven decisions regarding agricultural policies and resource allocation.
+            <br><br>
+            The analysis will assist in addressing challenges such as price volatility, productivity management, and regional differences, which can inform future policy-making, subsidy adjustments, and planning for sustainable agricultural development.
+        </div>
+
+        <!-- Graph 1 and Graph 2 (top row) -->
+        <div class="graph-container">
+            <div class="graph-box">
+                <canvas id="gramChart" class="graph"></canvas>
+                <div class="description-box">
+                    <strong>States:</strong> Andhra Pradesh, Karnataka, Maharashtra, Uttar Pradesh, Rajasthan, Gujarat, Punjab<br>
+                    Gram prices and productivity across key states.
+                </div>
+            </div>
+
+            <div class="graph-box">
+                <canvas id="turChart" class="graph"></canvas>
+                <div class="description-box">
+                    <strong>States:</strong> Tamil Nadu, Kerala, West Bengal, Odisha, Jharkhand, Assam, Bihar<br>
+                    Tur dal prices and productivity data.
+                </div>
+            </div>
+        </div>
+
+        <!-- Graph 3 and Graph 4 (bottom row) -->
+        <div class="graph-container">
+            <div class="graph-box">
+                <canvas id="uradChart" class="graph"></canvas>
+                <div class="description-box">
+                    <strong>States:</strong> Delhi, Haryana, Madhya Pradesh, Chhattisgarh, Telangana, Himachal Pradesh, Uttarakhand<br>
+                    Urad dal prices and productivity data.
+                </div>
+            </div>
+
+            <div class="graph-box">
+                <canvas id="moongChart" class="graph"></canvas>
+                <div class="description-box">
+                    <strong>States:</strong> Gujarat, Rajasthan, Karnataka, Maharashtra, Punjab, Tamil Nadu, Uttar Pradesh<br>
+                    Moong dal prices and productivity data.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data for the graphs (example)
+        const labels = ['Andhra Pradesh', 'Karnataka', 'Maharashtra', 'Uttar Pradesh', 'Rajasthan', 'Gujarat', 'Punjab'];
+        const gramData = [60, 80, 70, 65, 90, 75, 85]; // Example data
+        const turData = [70, 60, 80, 75, 85, 90, 65];
+        const uradData = [65, 75, 85, 70, 60, 80, 90];
+        const moongData = [75, 85, 65, 70, 90, 80, 60];
+
+        // Function to create graphs
+        function createGraph(canvasId, labels, data, title) {
+            const ctx = document.getElementById(canvasId).getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Price per kg (₹)',
+                        data: data,
+                        backgroundColor: [
+                            '#ff6384', '#36a2eb', '#cc65fe', '#ffce56', '#2ecc71', '#3498db', '#e74c3c'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: title
+                        }
+                    }
+                }
+            });
+        }
+
+        // Create 4 graphs
+        createGraph('gramChart', labels, gramData, 'Gram Price and Productivity');
+        createGraph('turChart', labels, turData, 'Tur Price and Productivity');
+        createGraph('uradChart', labels, uradData, 'Urad Price and Productivity');
+        createGraph('moongChart', labels, moongData, 'Moong Price and Productivity');
+    </script>
+</body>
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGRI-PRICE Prediction System</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #004d66;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            padding: 20px;
+        }
+        .feature-box {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .feature-box h3 {
+            margin-top: 0;
+            color: #004d66;
+        }
+        .feature-box p {
+            color: #666;
+        }
+        footer {
+            background-color: #004d66;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .feature-img {
+            width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>AGRIPRICE</h1>
+    </header>
+
+    <div class="container">
+        <section>
+            <div class="feature-box">
+                <h3>Real-Time Price Trends</h3>
+                <img src="https://via.placeholder.com/600x400" alt="Price Trends" class="feature-img">
+                <p>Provides up-to-date insights on price changes for essential commodities. Helps users track fluctuations and make informed purchasing decisions.</p>
+                <div class="chart-container">
+                    <canvas id="priceTrendsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="feature-box">
+                <h3>Smart Alerts</h3>
+                <img src="https://via.placeholder.com/600x400" alt="Smart Alerts" class="feature-img">
+                <p>Automated notifications for significant price changes or market trends. Keeps users informed about critical updates without constant monitoring.</p>
+            </div>
+
+            <div class="feature-box">
+                <h3>Predictive Analytics</h3>
+                <img src="https://via.placeholder.com/600x400" alt="Predictive Analytics" class="feature-img">
+                <p>Uses historical data and current trends to forecast future price movements. Assists in planning and budgeting by anticipating market conditions.</p>
+                <div class="chart-container">
+                    <canvas id="predictiveAnalyticsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="feature-box">
+                <h3>Interactive Heatmaps</h3>
+                <img src="https://via.placeholder.com/600x400" alt="Interactive Heatmaps" class="feature-img">
+                <p>Visual representation of price variations across different regions. Identifies hotspots of price volatility and stability for better regional planning.</p>
+            </div>
+
+            <div class="feature-box">
+                <h3>Market Models</h3>
+                <img src="https://via.placeholder.com/600x400" alt="Market Models" class="feature-img">
+                <p>Advanced models analyze market dynamics and predict impacts on prices. Provides insights into how various factors influence market conditions.</p>
+            </div>
+
+            <div class="feature-box">
+                <h3>Customizable Reports</h3>
+                <img src="https://via.placeholder.com/600x400" alt="Customizable Reports" class="feature-img">
+                <p>Generate tailored reports based on specific needs and parameters. Allows for detailed analysis and reporting on commodity prices.</p>
+            </div>
+
+           
+
+            <div class="feature-box">
+                <h3>Data Privacy and Security</h3>
+                <img src="https://via.placeholder.com/600x400" alt="Data Privacy and Security" class="feature-img">
+                <p>Ensures all user data and interactions are securely protected. Provides peace of mind with robust security measures.</p>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Department of Consumer Affairs. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Real-Time Price Trends Chart
+        const ctx1 = document.getElementById('priceTrendsChart').getContext('2d');
+        new Chart(ctx1, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                datasets: [{
+                    label: 'Price Trends',
+                    data: [10, 20, 15, 30, 25, 40, 35],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Predictive Analytics Chart
+        const ctx2 = document.getElementById('predictiveAnalyticsChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'bar',
+            data: {
+                labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+                datasets: [{
+                    label: 'Predicted Prices',
+                    data: [50, 70, 60, 90],
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

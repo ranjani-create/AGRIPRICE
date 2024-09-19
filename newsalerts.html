@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Essential Goods News</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color:#004d66;
+      color: white;
+      padding: 10px 0;
+      text-align: center;
+      position: relative;
+    }
+    header a {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      text-decoration: none;
+      font-size: 24px;
+    }
+    main {
+      padding: 20px;
+    }
+    #news-section {
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+    #news-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .news-article {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 15px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .news-article:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .news-article img {
+      width: 100%;
+      height: auto;
+      border-radius: 5px;
+      margin-bottom: 15px;
+    }
+    footer {
+      text-align: center;
+      background-color: #004d66;
+      color: white;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="index.html">&#8592;</a>
+    <h1>News Alert</h1>
+  </header>
+
+  <main>
+    <section id="news-section">
+      <h2>Latest News</h2>
+      <div id="news-container">
+        <!-- News articles will be injected here -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Updated regularly for essential goods price changes</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const newsContainer = document.getElementById('news-container');
+
+      const newsData = [
+        {
+          title: 'Surge in vegetable prices in Andhra Pradesh due to flood damage',
+          content: 'Heavy rains and subsequent floods in Andhra Pradesh have caused extensive damage to vegetable farms, leading to a sharp rise in prices of essential vegetables like eggplant, okra, and legumes. The supply chain disruption has forced vendors to rely on imports from other regions to meet the growing demand.',
+          image:'https://th.bing.com/th?id=OVFT.0tVOtSAsqNB55tDMmsAJkC&pid=News&w=234&h=132&c=14&rs=2&qlt=90&dpr=1.3',
+          link:'https://timesofindia.indiatimes.com/city/vijayawada/surge-in-vegetable-prices-in-andhra-pradesh-due-to-flood-damage/articleshow/113416537.cms'
+        },
+        {
+          title: 'Prices of major agri commodities to stay stable: Govt',
+          content: 'The government assures that prices of key agricultural commodities will remain stable during the festive season.A credit guarantee scheme has been introduced to support farmers against distress sales and post-harvest losses.',
+          image: 'https://img.etimg.com/thumb/msid-113457687,width-300,height-225,imgsize-188000,resizemode-75/india-cannot-become-developed-nation-with-backward-agriculture-bayer-south-asia-prez.jpg',
+          link:'https://economictimes.indiatimes.com/news/economy/agriculture/prices-of-major-agri-commodities-to-stay-stable-govt/articleshow/113457710.cms'
+        },
+        {
+          title: 'Government asks edible oil firms not to hike retail prices; 30 lakh tons oils imported at lower duty available',
+          content: 'The government has urged edible oil processors not to raise prices despite recent import duty hikes, citing sufficient stocks imported at lower duties. The food ministry stated that these stocks would last 45-50 days. The import duty increase aims to support domestic oilseed farmers as new crops arrive in October 2024.',
+          image:'https://etimg.etb2bimg.com/photo/113441577.cms',
+          link:'https://retail.economictimes.indiatimes.com/news/food-entertainment/grocery/government-asks-edible-oil-firms-not-to-hike-retail-prices-30-lakh-tons-oils-imported-at-lower-duty-available/113441555'
+        }
+      ];
+
+      // Function to render news articles
+      const renderNews = () => {
+        newsData.forEach(article => {
+          const articleDiv = document.createElement('div');
+          articleDiv.classList.add('news-article');
+          
+          articleDiv.innerHTML = `
+            <img src="${article.image}" alt="${article.title}">
+            <h3>${article.title}</h3>
+            <p>${article.content}</p>
+            <a href="${article.link}" class="learn-more" target="_blank">Learn more</a> <!-- Added learn more link -->
+          `;
+
+          newsContainer.appendChild(articleDiv);
+        });
+      };
+
+      renderNews();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparison of Price Trends of Essential Oils</title>
+    <!-- Use a different CDN for Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .title-container {
+            text-align: center;
+            background-color: #004d66;
+            color: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 10px;
+            max-width: 80%;
+            margin: 0 auto;
+        }
+
+        .chart-container {
+            width: 650px;
+            height: 450px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="title-container">
+    Comparison of Price Trends of Essential Oils </div>
+
+<div class="chart-container">
+    <canvas id="chart1"></canvas>
+</div>
+<div class="chart-container">
+    <canvas id="chart2"></canvas>
+</div>
+<div class="chart-container">
+    <canvas id="chart3"></canvas>
+</div>
+<div class="chart-container">
+    <canvas id="chart4"></canvas>
+</div>
+
+<script>
+    // Defining the labels (Indian states for comparison)
+    const labelsSet1 = ['Tamil Nadu', 'Maharashtra', 'Karnataka', 'Kerala', 'Punjab', 'Haryana', 'Gujarat'];
+    const labelsSet2 = ['Uttar Pradesh', 'Bihar', 'Rajasthan', 'Madhya Pradesh', 'West Bengal', 'Odisha', 'Jharkhand'];
+    const labelsSet3 = ['Assam', 'Chhattisgarh', 'Goa', 'Telangana', 'Andhra Pradesh', 'Himachal Pradesh', 'Uttarakhand'];
+    const labelsSet4 = ['Jammu & Kashmir', 'Sikkim', 'Meghalaya', 'Tripura', 'Nagaland', 'Manipur', 'Arunachal Pradesh'];
+
+    // Data for each set of states (Price trends for each state)
+    const datasetsSet1 = [
+        { label: 'Groundnut Oil', data: [50, 55, 60, 65, 70, 75, 80], borderColor: 'red', fill: false },
+        { label: 'Sesame Oil', data: [40, 45, 50, 55, 60, 65, 70], borderColor: 'blue', fill: false },
+        { label: 'Sunflower Oil', data: [30, 35, 40, 45, 50, 55, 60], borderColor: 'green', fill: false }
+    ];
+
+    const datasetsSet2 = [
+        { label: 'Groundnut Oil', data: [55, 60, 65, 70, 75, 80, 85], borderColor: 'red', fill: false },
+        { label: 'Sesame Oil', data: [45, 50, 55, 60, 65, 70, 75], borderColor: 'blue', fill: false },
+        { label: 'Sunflower Oil', data: [35, 40, 45, 50, 55, 60, 65], borderColor: 'green', fill: false }
+    ];
+
+    const datasetsSet3 = [
+        { label: 'Groundnut Oil', data: [60, 65, 70, 75, 80, 85, 90], borderColor: 'red', fill: false },
+        { label: 'Sesame Oil', data: [50, 55, 60, 65, 70, 75, 80], borderColor: 'blue', fill: false },
+        { label: 'Sunflower Oil', data: [40, 45, 50, 55, 60, 65, 70], borderColor: 'green', fill: false }
+    ];
+
+    const datasetsSet4 = [
+        { label: 'Groundnut Oil', data: [65, 70, 75, 80, 85, 90, 95], borderColor: 'red', fill: false },
+        { label: 'Sesame Oil', data: [55, 60, 65, 70, 75, 80, 85], borderColor: 'blue', fill: false },
+        { label: 'Sunflower Oil', data: [45, 50, 55, 60, 65, 70, 75], borderColor: 'green', fill: false }
+    ];
+
+    // Function to create line charts
+    function createChart(chartId, labels, datasets) {
+        new Chart(document.getElementById(chartId), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: datasets
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'States'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Price (in INR)'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Create 4 different line charts for 4 sets of 7 states
+    createChart('chart1', labelsSet1, datasetsSet1);
+    createChart('chart2', labelsSet2, datasetsSet2);
+    createChart('chart3', labelsSet3, datasetsSet3);
+    createChart('chart4', labelsSet4, datasetsSet4);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGRIPRICE - Heatmap of India</title>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #map {
+            height: 70vh;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        header, footer {
+            background-color:#004d66;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .tooltip-content {
+            font-size: 14px;
+            color: black;
+            background-color: #ffffcc;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #cccccc;
+        }
+
+        .legend {
+            background: white;
+            line-height: 1.5;
+            padding: 10px;
+            font-size: 12px;
+        }
+
+        /* Stunning content section */
+        .content-box {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 90%;
+            background: linear-gradient(135deg, #004d66, #004d66);
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .content-box h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-align: center;
+            color: white;
+        }
+
+        .content-box p {
+            font-size: 18px;
+            margin: 15px 0;
+            text-align: justify;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>AGRIPRICE - Heatmap of India</h1>
+    </header>
+
+    <!-- Content Box with rounded gradient corners -->
+    <div class="content-box">
+        <h2>Overview of Average Prices for Essential Commodities</h2>
+        <p>
+            Welcome to the AGRIPRICE heatmap, a comprehensive tool designed to assist government authorities in monitoring the average prices of essential commodities across the states of India. Our interactive map visualizes the average price per kilogram for 22 key commodities, providing valuable insights into price trends and regional variations.
+        </p>
+        <p>
+            The heatmap displays color-coded data for each state, allowing for a quick assessment of price levels. States with higher prices are highlighted in darker shades, while lower prices are shown in lighter colors. This visual representation aids in identifying areas with price surges or declines, facilitating targeted interventions and policy adjustments.
+        </p>
+        <p>
+            Each state's tooltip reveals detailed information, including the current average price per kilogram and the trend direction. Positive trends are indicated with green arrows, signifying price increases, while negative trends are marked with red arrows, reflecting price decreases. This feature enables a clear understanding of market dynamics and helps in making informed decisions to stabilize prices.
+        </p>
+        <p>
+            We hope this tool will support efficient decision-making and enhance the overall effectiveness of agricultural and commodity price regulation strategies.
+        </p>
+    </div>
+
+    <!-- Map Section -->
+    <div id="map"></div>
+
+    <footer>
+        <p>&copy; 2024 AGRIPRICE. All rights reserved.</p>
+    </footer>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+    <!-- Dummy Data for 20 Major States in India -->
+    <script>
+        var map = L.map('map').setView([22.5937, 78.9629], 5);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 10,
+            attribution: '© OpenStreetMap',
+            noWrap: true,
+            bounds: [
+                [6.5546079, 68.1113787],
+                [35.6745457, 97.395555]
+            ]
+        }).addTo(map);
+
+        function getColor(price) {
+            return price > 48 ? '#800026' :
+                   price > 45 ? '#BD0026' :
+                   price > 40 ? '#E31A1C' :
+                   price > 35 ? '#FC4E2A' :
+                   price > 30 ? '#FD8D3C' :
+                   '#FEB24C';
+        }
+
+        var indiaStatesGeoJson = {
+            "type": "FeatureCollection",
+            "features": [
+                {"type": "Feature", "properties": {"name": "Maharashtra", "price": 50, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[72.83, 18.96], [73.84, 18.52], [74.65, 19.19], [72.83, 18.96]]]}},
+                {"type": "Feature", "properties": {"name": "Karnataka", "price": 35, "change": "down"}, "geometry": {"type": "Polygon", "coordinates": [[[75.78, 15.31], [76.50, 14.95], [75.60, 14.12], [75.78, 15.31]]]}},
+                {"type": "Feature", "properties": {"name": "Tamil Nadu", "price": 45, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[80.27, 13.09], [79.15, 12.91], [78.65, 11.63], [80.27, 13.09]]]}},
+                {"type": "Feature", "properties": {"name": "Uttar Pradesh", "price": 40, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[80.33, 26.85], [81.63, 27.57], [82.65, 26.89], [80.33, 26.85]]]}},
+                // Add more state data here
+               
+                {"type": "Feature", "properties": {"name": "Rajasthan", "price": 38, "change": "down"}, "geometry": {"type": "Polygon", "coordinates": [[[73.47, 26.91], [74.63, 27.34], [75.43, 26.48], [73.47, 26.91]]]}},
+                {"type": "Feature", "properties": {"name": "West Bengal", "price": 42, "change": "down"}, "geometry": {"type": "Polygon", "coordinates": [[[88.36, 22.57], [87.72, 23.47], [88.72, 24.25], [88.36, 22.57]]]}},
+                {"type": "Feature", "properties": {"name": "Gujarat", "price": 48, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[72.63, 23.02], [72.14, 21.76], [71.88, 22.31], [72.63, 23.02]]]}},
+                {"type": "Feature", "properties": {"name": "Madhya Pradesh", "price": 39, "change": "down"}, "geometry": {"type": "Polygon", "coordinates": [[[77.41, 23.26], [78.43, 22.97], [77.82, 21.73], [77.41, 23.26]]]}},
+                {"type": "Feature", "properties": {"name": "Bihar", "price": 41, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[85.12, 25.59], [86.92, 26.03], [85.64, 26.47], [85.12, 25.59]]]}},
+                {"type": "Feature", "properties": {"name": "Punjab", "price": 43, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[75.85, 31.62], [76.54, 30.94], [75.43, 31.04], [75.85, 31.62]]]}},
+                {"type": "Feature", "properties": {"name": "Haryana", "price": 37, "change": "down"}, "geometry": {"type": "Polygon", "coordinates": [[[76.39, 30.73], [77.22, 29.97], [76.43, 29.72], [76.39, 30.73]]]}},
+                {"type": "Feature", "properties": {"name": "Delhi", "price": 47, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[77.10, 28.61], [77.21, 28.47], [77.29, 28.65], [77.10, 28.61]]]}},
+                {"type": "Feature", "properties": {"name": "Kerala", "price": 50, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[76.27, 9.93], [76.97, 10.52], [77.60, 9.48], [76.27, 9.93]]]}},
+                {"type": "Feature", "properties": {"name": "Assam", "price": 36, "change": "down"}, "geometry": {"type": "Polygon", "coordinates": [[[91.73, 26.20], [92.70, 26.73], [93.28, 25.98], [91.73, 26.20]]]}},
+                {"type": "Feature", "properties": {"name": "Odisha", "price": 38, "change": "down"}, "geometry": {"type": "Polygon", "coordinates": [[[85.83, 20.29], [84.92, 19.89], [85.36, 21.15], [85.83, 20.29]]]}},
+                {"type": "Feature", "properties": {"name": "Chhattisgarh", "price": 44, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[82.15, 21.25], [82.59, 22.08], [83.01, 21.45], [82.15, 21.25]]]}},
+                {"type": "Feature", "properties": {"name": "Jharkhand", "price": 37, "change": "down"}, "geometry": {"type": "Polygon", "coordinates": [[[85.84, 23.53], [86.52, 23.25], [85.96, 22.87], [85.84, 23.53]]]}},
+                {"type": "Feature", "properties": {"name": "Himachal Pradesh", "price": 46, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[77.32, 31.25], [77.92, 31.15], [77.55, 30.90], [77.32, 31.25]]]}},
+                {"type": "Feature", "properties": {"name": "Uttarakhand", "price": 40, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[78.40, 30.06], [78.76, 30.32], [78.56, 29.96], [78.40, 30.06]]]}},
+                {"type": "Feature", "properties": {"name": "Tripura", "price": 34, "change": "down"}, "geometry": {"type": "Polygon", "coordinates": [[[91.64, 23.84], [92.15, 23.43], [91.91, 23.61], [91.64, 23.84]]]}},
+                {"type": "Feature", "properties": {"name": "Manipur", "price": 41, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[94.15, 24.80], [94.76, 24.55], [94.54, 24.27], [94.15, 24.80]]]}},
+                {"type": "Feature", "properties": {"name": "Meghalaya", "price": 39, "change": "down"}, "geometry": {"type": "Polygon", "coordinates": [[[91.58, 25.42], [91.95, 25.75], [91.75, 25.12], [91.58, 25.42]]]}},
+                {"type": "Feature", "properties": {"name": "Sikkim", "price": 43, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[88.62, 27.00], [88.96, 26.87], [89.00, 27.12], [88.62, 27.00]]]}},
+                {"type": "Feature", "properties": {"name": "Andaman and Nicobar Islands", "price": 48, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[92.63, 11.53], [92.73, 11.27], [92.42, 11.18], [92.63, 11.53]]]}},
+                {"type": "Feature", "properties": {"name": "Lakshadweep", "price": 50, "change": "up"}, "geometry": {"type": "Polygon", "coordinates": [[[72.64, 10.57], [72.80, 10.45], [72.70, 10.22], [72.64, 10.57]]]}},
+            ]
+        };
+
+        L.geoJSON(indiaStatesGeoJson, {
+            style: function(feature) {
+                return {
+                    fillColor: getColor(feature.properties.price),
+                    weight: 2,
+                    opacity: 1,
+                    color: 'white',
+                    dashArray: '3',
+                    fillOpacity: 0.7
+                };
+            },
+            onEachFeature: function(feature, layer) {
+                layer.bindTooltip(
+                    "<div class='tooltip-content'><strong>" + feature.properties.name + "</strong><br>Price: Rs:" + feature.properties.price + "/kg<br>Trend: " + (feature.properties.change === 'up' ? 'Up' : 'Down') + "</div>"
+                );
+            }
+        }).addTo(map);
+    </script>
+
+</body>
+</html>
